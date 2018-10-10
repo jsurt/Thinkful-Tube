@@ -5,6 +5,7 @@ function getDataFromApi(searchTerm, callback) {
     part: 'snippet',
     key: 'AIzaSyAH3n0AVo3RaBhwbs2lNFCQh6UJmluqj-w',
     q: `${searchTerm} in:name`,
+    nextPageToken: "",
     per_page: 5
   }
   //console.log($.getJSON(ENDPOINT_URL, query, callback));
@@ -17,18 +18,18 @@ function displayYouTubeSearchData(data) {
   data.items.forEach(function (item) {
     resultsHTML = (resultsHTML + '<div class="search-item col s12 m6"><div class="card small hoverable">' +
       '<div class="card-image">' +
-        '<iframe src="https://www.youtube.com/embed/' + item.id.videoId + '" frameborder="0" allowfullscreen></iframe>' +
+        '<iframe src="https://www.youtube.com/embed/' + item.id.videoId + '" frameborder="0" title="YouTube Video" allowfullscreen></iframe>' +
       '</div>' +
       '<div class="card-content">' +
         '<p class="truncate">' + item.snippet.title + '</p>' +
       '</div>' +
       '<div class="card-action">' +
-        '<a href="https://www.youtube.com/channel/' + item.snippet.channelId + '">View more from '+ item.snippet.channelTitle + '</a>' +
+        '<a href="https://www.youtube.com/channel/' + item.snippet.channelId + '" target="self">View more from '+ item.snippet.channelTitle + '</a>' +
       '</div>' + 
       '</div></div>')
   });  
-  resultsHTML = resultsHTML + '</div>';
-  $('.js-search-results').html(resultsHTML);
+  resultsHTML = resultsHTML + '<button>Next Page</button></div>';
+  $('.js-search-results').prop('hidden', false).html(resultsHTML);
 }
 
 function getQuery() {
